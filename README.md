@@ -66,3 +66,23 @@ A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, Ba
 | Z | 0.771 | 0.695 | 0.731 | 0.923 |
 | Top | 0.808 | 0.790 | 0.799 | 0.951 |
 
+---
+
+### Key findings
+
+**1. The CNN implicitly learned particle masses from pixels alone.** Efficiency-vs-jet-mass curves peak almost exactly at the known resonance masses — W at ~75–85 GeV (true: 80.4 GeV) and Z at ~90–100 GeV (true: 91.2 GeV) — despite the model never being given mass as an input. This mirrors results in the jet-tagging literature (e.g. de Oliveira et al. 2016; Kasieczka et al. 2017) showing CNNs on calorimeter images can recover physically meaningful substructure without explicit supervision.
+
+**2. Multiplicity cleanly separates quark and top jets.** Quark jets dominate efficiency at very low particle multiplicity (<30), consistent with narrow, sparse quark showers; top jets peak broadly at 60–90 particles, consistent with the three-body `t → Wb → qqb` decay chain producing high-multiplicity jets. This was the single most interpretable result of the efficiency study.
+
+**3. W/Z confusion is the CNN's dominant failure mode.** At high transverse momentum (pT > 1100 GeV), Z-tagging efficiency collapses almost to zero — the model reassigns most boosted Z jets to the W class. This is expected: W and Z bosons have nearly identical masses and near-identical two-prong substructure once highly boosted, a known hard case even for state-of-the-art taggers (Larkoski, Moult & Nachman 2020).
+
+**4. Explicit physics features beat raw pixels** The features DNN, despite having ~40× fewer parameters, outperformed the image CNN on every metric — and cut the Z→W misclassification rate from 21% to 4% (a fivefold reduction). This suggests the 100×100 pixel representation, while visually informative, doesn't preserve the fine-grained substructure information (e.g. N-subjettiness) needed to fully resolve W from Z, whereas that information is handed directly to the DNN as engineered features.
+
+**5. A "smarter" CNN redesign wasn't actually better.** Attempting to fix the W/Z problem by deepening the CNN (finer kernels, more filters, extra conv block, BatchNorm) increased overfitting rather than closing the gap — evidence that the bottleneck was information content in the image representation, not model capacity.
+
+## Limitations
+
+- No dedicated held-out test set in the public data release; validation-set reuse for both early stopping and evaluation is a known limitation, mitigated by shuffling and fixed random seeds but not fully independent.
+- Limited on the total effective sample size - when downloading and processing the data, the number of files that could be processed was limited by the system RAM, which would cause the whole notebook to crash.
+- `model_v2` results are reported as a negative finding rather than a working improvement.
+
