@@ -24,6 +24,8 @@ Particle jets — narrow collimated sprays of hadrons produced by high-momentum 
 
 This project aims to analyse the effectiveness of jet classification between five categories of particle - Gluon, Quark, W boson, Z boson and Top Quark - using a CNN only trained on sparse images of jet deposits, compared to jet identification using a DNN trained on 53 jet substructure observables. 
 
+---
+
 ## Models
 
 ### 1. Image CNN (`model_v1`) — baseline
@@ -42,4 +44,25 @@ Trained on the 53 scalar jet observables only (no image input), architecture-mat
 
 ### 3. `model_v2` (attempted, not adopted)
 A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, BatchNorm) motivated by the diagnostics below. It **overfit** — worse validation accuracy despite marginally better training accuracy — and was abandoned (and thus not mentioned in final report).
+
+---
+
+## Results
+
+### Headline metrics
+
+| Model | Input | Val/Test Accuracy | Macro AUC | Params |
+|---|---|---:|---:|---:|
+| Image CNN (`model_v1`) | 100×100 calorimeter image | 0.733 | 0.928 | 4,812,805 |
+| Features DNN | 53 jet observables | 0.822 | 0.962 | 115,717 |
+
+### Image CNN — per-class performance (test set, n=16,000)
+
+| Class | Precision | Recall | F1 | AUC |
+|---|---:|---:|---:|---:|
+| Gluon | 0.722 | 0.676 | 0.698 | 0.922 |
+| Quark | 0.662 | 0.697 | 0.679 | 0.906 |
+| W | 0.710 | 0.802 | 0.753 | 0.937 |
+| Z | 0.771 | 0.695 | 0.731 | 0.923 |
+| Top | 0.808 | 0.790 | 0.799 | 0.951 |
 
