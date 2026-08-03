@@ -96,6 +96,7 @@ A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, Ba
 | `lhcJets_combined_analysis_model_v1.ipynb` | Main pipeline: EDA, `model_v1` CNN build/train, confusion matrix, classification report, ROC/AUC |
 | `Jet_Features_analysis_model_v1.ipynb` | Post-hoc physics diagnostics: efficiency vs `j_pt`, `j_mass`, `j_multiplicity`, with binomial error bars and literature comparison |
 | `Extension_task_training_on_features_only.ipynb` | `model_v2` redesign attempt (rejected), Features DNN build/train, head-to-head CNN vs DNN comparison |
+| `PHAS0056___LHC_Jets_Mini_project.pdf` | full report write-up for this mini project |
 |
 
 
