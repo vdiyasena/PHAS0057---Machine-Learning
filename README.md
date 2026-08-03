@@ -88,3 +88,16 @@ A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, Ba
 - Limited on the total effective sample size - when downloading and processing the data, the number of files that could be processed was limited by the system RAM, which would cause the whole notebook to crash.
 - `model_v2` results are reported as a negative finding rather than a working improvement.
 
+## Repository structure
+
+| Notebook | Purpose |
+|---|---|
+| `Data_loading.ipynb` | Loads raw HLS4ML `.h5` files, applies log-normalisation, builds train/val image arrays and feature dataframes, saves to `.npy`/`.parquet` |
+| `lhcJets_combined_analysis_model_v1.ipynb` | Main pipeline: EDA, `model_v1` CNN build/train, confusion matrix, classification report, ROC/AUC |
+| `Jet_Features_analysis_model_v1.ipynb` | Post-hoc physics diagnostics: efficiency vs `j_pt`, `j_mass`, `j_multiplicity`, with binomial error bars and literature comparison |
+| `Extension_task_training_on_features_only.ipynb` | `model_v2` redesign attempt (rejected), Features DNN build/train, head-to-head CNN vs DNN comparison |
+|
+
+
+
+
