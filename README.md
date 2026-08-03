@@ -10,6 +10,8 @@ A machine learning mini-project (UCL - PHAS0057) classifying simulated LHC jets 
 
 Particle jets — narrow collimated sprays of hadrons produced by high-momentum quarks, gluons, or boosted heavy particles — are central to LHC physics, from the original observation of the gluon to searches for rare Higgs decays. In experimental physics, the identification and classification of jets is one of the most important tasks as jet substructure has provided numerous alternative ways to to probe the Standard Model. The traditional methodology for jet classification involved relying on observables of the jets. However, with the advent of deep learning, a new approach for jet identification is available to us: translating the calorimeter energy deposits of a jet to a two-dimensional image and applying a convolutional neural network (CNN) directly to pixel-level data. 
 
+---
+
 ## Data
 
 - **Source:** [HLS4ML dataset](https://zenodo.org/doi/10.5281/zenodo.3602253) (Zenodo)
@@ -21,4 +23,23 @@ Particle jets — narrow collimated sprays of hadrons produced by high-momentum 
 - **Note on validation set:** the public HLS4ML release doesn't ship a separate held-out test set, so the validation files (7–9) were used only for early stopping, not weight updates, and then reused for evaluation metrics reported below
 
 This project aims to analyse the effectiveness of jet classification between five categories of particle - Gluon, Quark, W boson, Z boson and Top Quark - using a CNN only trained on sparse images of jet deposits, compared to jet identification using a DNN trained on 53 jet substructure observables. 
+
+## Models
+
+### 1. Image CNN (`model_v1`) — baseline
+Trained on the single-channel combined calorimeter image.
+
+- 3× `Conv2D` blocks (32 → 64 → 128 filters, 3×3 kernels, LeakyReLU, MaxPooling, L2 regularisation)
+- `Dense(256)` → Dropout(0.3) → `Dense(5)` output (softmax via logits + `SparseCategoricalCrossentropy`)
+- Optimizer: Adam · Early stopping on `val_loss` (patience 10) · up to 200 epochs
+
+### 2. Features DNN — extension
+Trained on the 53 scalar jet observables only (no image input), architecture-matched in depth to `model_v1` for a fair comparison.
+
+- 3× `Dense` blocks (256 → 256 → 128, each with BatchNorm, LeakyReLU, Dropout 0.3, L2 regularisation)
+- `Dense(5)` output
+- Optimizer: AdamW · same early-stopping regime
+
+### 3. `model_v2` (attempted, not adopted)
+A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, BatchNorm) motivated by the diagnostics below. It **overfit** — worse validation accuracy despite marginally better training accuracy — and was abandoned (and thus not mentioned in final report).
 
