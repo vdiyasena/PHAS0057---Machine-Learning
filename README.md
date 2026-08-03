@@ -80,6 +80,8 @@ A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, Ba
 
 **5. A "smarter" CNN redesign wasn't actually better.** Attempting to fix the W/Z problem by deepening the CNN (finer kernels, more filters, extra conv block, BatchNorm) increased overfitting rather than closing the gap — evidence that the bottleneck was information content in the image representation, not model capacity.
 
+---
+
 ## Limitations
 
 - No dedicated held-out test set in the public data release; validation-set reuse for both early stopping and evaluation is a known limitation, mitigated by shuffling and fixed random seeds but not fully independent.
