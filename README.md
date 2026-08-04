@@ -98,6 +98,26 @@ A deeper/wider CNN redesign (2×2 kernels, more filters, a fourth conv block, Ba
 | `Extension_task_training_on_features_only.ipynb` | `model_v2` redesign attempt (rejected), Features DNN build/train, head-to-head CNN vs DNN comparison |
 | `PHAS0056___LHC_Jets_Mini_project.pdf` | Full report write-up for this mini project including all references used |
 
+---
+
+## How to run
+
+1. Download the HLS4ML dataset from [Zenodo](https://zenodo.org/doi/10.5281/zenodo.3602253) and place `.h5` files in `data_files/train/` and `data_files/val/`
+2. Run `Data_loading.ipynb` first to generate the cached `.npy` image arrays and `.parquet` feature files
+3. Run `lhcJets_combined_analysis_model_v1.ipynb` to train the baseline CNN
+4. Run `Jet_Features_analysis_model_v1.ipynb` for the physics diagnostic plots (requires the saved `model_v1`)
+5. Run `Extension_task_training_on_features_only.ipynb` for the features DNN and CNN-vs-DNN comparison
+
+## Dependencies
+    tensorflow
+    h5py
+    numpy
+    pandas
+    matplotlib
+    scikit-learn
+    scipy
+
+
 
 
 
